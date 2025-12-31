@@ -1,0 +1,115 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #000;
+    color: white;
+    font-family: Roboto, Arial, sans-serif;
+    overflow: hidden; 
+}
+
+/* --- LAYAR PEMBUKA --- */
+#start-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start-overlay button {
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    background: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+/* --- CONTAINER SCROLL (SNAP) --- */
+.app-container {
+    height: 100vh;
+    width: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+.app-container::-webkit-scrollbar { display: none; }
+
+/* --- KARTU VIDEO --- */
+.video-card {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    scroll-snap-align: start;
+    background: #111;
+    overflow: hidden;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+}
+
+/* --- OVERLAY UI (JUDUL & TOMBOL) --- */
+.overlay {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 30%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    pointer-events: none; /* PENTING: Supaya klik tembus ke video */
+}
+
+.video-info { margin-bottom: 20px; width: 80%; }
+.username { font-weight: bold; font-size: 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.avatar { width: 32px; height: 32px; background: #555; border-radius: 50%; }
+.title { font-size: 14px; line-height: 1.4; }
+
+.actions {
+    position: absolute; right: 10px; bottom: 100px;
+    display: flex; flex-direction: column; gap: 25px; align-items: center;
+}
+.action-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.material-icons { font-size: 30px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.count { font-size: 12px; font-weight: 500; }
+
+/* --- LOGIKA IKON PAUSE --- */
+.play-icon-overlay {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 90px;
+    color: rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    z-index: 10;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    
+    /* Default SEMBUNYI */
+    display: none; 
+}
+
+/* Saat video dipause (JS menambahkan class .paused), ikon MUNCUL */
+.video-card.paused .play-icon-overlay {
+    display: block;
+}
+
+/* Gelapkan video dikit saat pause */
+.video-card.paused video {
+    opacity: 0.7;
+}
